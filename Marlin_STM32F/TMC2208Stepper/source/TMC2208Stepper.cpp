@@ -8,7 +8,7 @@
 TMC2208Stepper::TMC2208Stepper(/*Stream * SerialPort,*/ bool has_rx) {
 	write_only = 1;//luojin !has_rx;
 	#if SW_CAPABLE_PLATFORM
-		uses_sw_serial = false;
+		uses_sw_serial = true;
 	#endif
 		//luojinHWSerial = SerialPort;
 }
@@ -37,7 +37,8 @@ TMC2208Stepper::TMC2208Stepper(HardwareSerial &SerialPort, bool has_rx) {
 	TMC2208Stepper::TMC2208Stepper(int16_t SW_RX_pin, int16_t SW_TX_pin, bool has_rx) {
 		write_only = !has_rx;
 		uses_sw_serial = true;
-		SoftwareSerial *mySWSerial = new SoftwareSerial(SW_RX_pin, SW_TX_pin);
+	//	SoftwareSerial *mySWSerial = new SoftwareSerial(SW_RX_pin, SW_TX_pin);
+		NewSoftSerial *mySWSerial=new NewSoftSerial(SW_RX_pin, SW_TX_pin);
 		SWSerial = mySWSerial;
 	}
 
@@ -243,8 +244,10 @@ bool TMC2208Stepper::sendDatagram(uint8_t addr, uint32_t *data, uint8_t len) {
 	if (uses_sw_serial) {
 
 		#if SW_CAPABLE_PLATFORM
-			SWSerial->listen();
-			out = _sendDatagram(*SWSerial, datagram, len, replyDelay);
+			for(int i=0; i<=len; i++)
+				bytesWritten += SWSerial->write(datagram[i]);
+		//	SWSerial->listen();
+		//	out = _sendDatagram(*SWSerial, datagram, len, replyDelay);
 		#endif
 
 	} else {

@@ -273,6 +273,12 @@
 #include "MarlinSerial.h"
 #include "stm32f10x_it.h"
 
+#include "NewSoftSerial/NewSoftSerial.h"
+#if  POWER_LOSS_RECOVER_SUPER_CAP
+	#include "power_loss_recovery.h"
+	  recovery_D recovery_detect_cap;
+#endif
+
 
   int OCR1A,DDRE ,PINE,PINE5,SREG,cli,DDRB,DDRH,PINB4,PINB5,PINH6,ADCSRA,ADEN,ADSC,ADIF,MCUSR;
   int PORTE,PORTD,DDRF,PINF7,PINL1,PINC3,DDRC,PORTJ,DIDR0,OCR0B,PINB,PORTA,PINA,PINA2,PINA6,PORTL,OCIE0B,TIMSK0,OCIE1A,TCNT1,PINL3,PINA4,PORTF,PINF,PINF6,PINF0;
@@ -1222,7 +1228,7 @@ inline void get_serial_commands() {
       const int16_t n = card.get();
       char sd_char = (char)n;
       card_eof = card.eof();
-	  MYSERIAL0.write(sd_char);
+	 // MYSERIAL0.write(sd_char);
       if (card_eof || n == -1
           || sd_char == '\n' || sd_char == '\r'
           || ((sd_char == '#' || sd_char == ':') && !sd_comment_mode)
@@ -8159,7 +8165,231 @@ inline void gcode_M105() {
 #ifndef MIN_COOLING_SLOPE_TIME
   #define MIN_COOLING_SLOPE_TIME 60
 #endif
+void delay_mcu(int ms)
+{
+   u16 i=0;
+   while(ms--)
+   {
+	  i=20;  //
+	  while(i--) ;
+   }
+   
+}
+#define M1_ENDSTOP	0xA3
+#define M2_ENDSTOP	0xEA
+#define M3_ENDSTOP	0xEB
+#define M4_ENDSTOP	0xD2
+#define M5_ENDSTOP	0xD3
 
+#define M6_ENDSTOP	0xD4
+#define M7_ENDSTOP	0xD5
+#define M8_ENDSTOP	0xD6
+#define M9_ENDSTOP	0xD7
+#define M10_ENDSTOP	0xB3
+
+#define ENABLE1_PIN_TEST  0xC4
+#define ENABLE2_PIN_TEST  0xBC
+#define ENABLE3_PIN_TEST  0xE2
+#define ENABLE4_PIN_TEST  0xD8
+#define ENABLE5_PIN_TEST  0xD9
+
+#define STEP_PIN_TEST  0xC5
+#define DIR_PIN_TEST  0xB0
+
+
+
+int motor_test(unsigned char endst0,unsigned char endst1,unsigned char enable1,unsigned char step_pin,unsigned char dir_pin,char inv)
+{
+	int kk[8];
+	int s_old[8];
+	int nn=0;
+	int i=0;
+	
+    memset(kk,0,sizeof(kk));
+    memset(s_old,0,sizeof(s_old));
+	OUT_WRITE(enable1,0);
+	_SET_INPUT(endst0);
+	_SET_INPUT(endst1);
+
+	while(1)
+	{		
+		OUT_WRITE(step_pin,0);
+		delay_mcu(10);
+		OUT_WRITE(step_pin,1);
+		delay_mcu(10);
+		if(READ(endst0)==0)
+		{			
+			OUT_WRITE(dir_pin,inv);
+			if(s_old[i]==1)
+			{
+				s_old[i]=0; 
+				kk[i]++;
+				
+			 	watchdog_reset();
+			}
+		}
+		else if(s_old[i]==0)
+			s_old[i]=1; 
+		
+		if(READ(endst1)==0)
+		{			 
+			OUT_WRITE(dir_pin,!inv);
+			if(s_old[i+1]==1)
+			{
+				s_old[i+1]=0; 
+				kk[i+1]++;
+				
+			 	watchdog_reset();
+			}
+			 
+		} 
+		else if(s_old[i+1]==0)
+			s_old[i+1]=1; 
+		
+		nn++;
+		if(kk[i]==3)
+		{
+			OUT_WRITE(enable1,1);
+		}
+		
+		if(nn>10000)
+		{
+			OUT_WRITE(enable1,1);
+
+		}
+		if(nn>15000)
+		{
+			nn=0;
+			break;
+			
+		}
+
+	}
+	OUT_WRITE(enable1,1);
+	if(kk[i+1]<2)
+		return 0;
+ return kk[i];
+}
+
+
+
+
+//M1090 for mainboard hardware test
+  void gcode_M1090() {
+	int kk[8];
+	int s_old[8];
+	int nn=0;
+	int i=0;
+	asm("CPSID  I");
+	//GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable,ENABLE);
+    memset(kk,0,sizeof(kk));
+    memset(s_old,0,sizeof(s_old));
+	///////////////////////////////////// x motor
+	nn=0;
+	i=0;
+	/*OUT_WRITE(0xDB,1);
+	OUT_WRITE(0xDE,1);
+	OUT_WRITE(0xC8,1);
+	OUT_WRITE(0xAA,1);
+ 	OUT_WRITE(0xAD,1);
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
+
+	
+	SET_INPUT(M1_ENDSTOP);
+	SET_INPUT(M2_ENDSTOP);
+	SET_INPUT(M3_ENDSTOP);
+	SET_INPUT(M4_ENDSTOP);
+	SET_INPUT(M5_ENDSTOP);
+	SET_INPUT(M6_ENDSTOP);
+	SET_INPUT(M7_ENDSTOP);
+	SET_INPUT(M8_ENDSTOP);
+	SET_INPUT(M9_ENDSTOP);
+	SET_INPUT(M10_ENDSTOP);
+	OUT_WRITE(ENABLE1_PIN_TEST,0);
+	OUT_WRITE(DIR_PIN_TEST,0);
+*/
+	OUT_WRITE(HEATER_BED_PIN,1);
+	OUT_WRITE(HEATER_0_PIN,1);
+	OUT_WRITE(HEATER_1_PIN,1);
+	
+	SERIAL_ERRORLNPGM("gcode_M1090_0");
+	kk[0]=motor_test(X_MIN_PIN,Y_MIN_PIN,X_ENABLE_PIN,X_STEP_PIN,X_DIR_PIN,1);
+	if(kk[0]==3)
+		OUT_WRITE(HEATER_BED_PIN,0);
+	kk[1]=motor_test(Y_MIN_PIN,Z_MIN_PIN,Y_ENABLE_PIN,Y_STEP_PIN,Y_DIR_PIN,1);	
+	if(kk[1]==3)
+		OUT_WRITE(HEATER_1_PIN,0);
+	
+	kk[2]=motor_test(Z_MIN_PIN,CUT1_PIN,Z_ENABLE_PIN,Z_STEP_PIN,Z_DIR_PIN,1);
+	if(kk[2]==3)
+		OUT_WRITE(HEATER_0_PIN,0);
+	
+	//kk[3]=motor_test(X_MIN_PIN,Y_MIN_PIN,E0_ENABLE_PIN,E0_STEP_PIN,E0_DIR_PIN,1);
+	//if(kk[3]==3)
+	//	OUT_WRITE(0xaa,0);
+	OUT_WRITE(E0_ENABLE_PIN,0);
+	OUT_WRITE(E1_ENABLE_PIN,0);
+
+	nn=0;
+	OUT_WRITE(E0_DIR_PIN,0);
+	OUT_WRITE(E1_DIR_PIN,0);
+	while(nn<10000)
+	{		
+		nn++;
+		OUT_WRITE(E0_STEP_PIN,0);
+		OUT_WRITE(E1_STEP_PIN,0);
+		delay_mcu(10);
+		OUT_WRITE(E0_STEP_PIN,1);
+		OUT_WRITE(E1_STEP_PIN,1);
+		delay_mcu(10);
+		if(nn==5000)
+		{
+		
+			OUT_WRITE(E0_DIR_PIN,1);
+			OUT_WRITE(E1_DIR_PIN,1);
+		}
+	}
+
+
+	
+	RCC->APB2ENR|=1;
+    AFIO->MAPR&=0xf8ffffff;
+    AFIO->MAPR|=0x04000000;RCC->APB2ENR|=1;
+    AFIO->MAPR&=0xf8ffffff;
+    AFIO->MAPR|=0x04000000;
+	
+//	kk[4]=motor_test(X_MIN_PIN,Y_MIN_PIN,X_ENABLE_PIN,X_STEP_PIN,X_DIR_PIN,1);
+//	if(kk[4]==3)
+//		OUT_WRITE(0xAD,0);
+
+    asm("CPSID  I");
+	if((kk[0]==3)&&(kk[1]==3)&&(kk[2]==3)/*&&(kk[3]==3)&&(kk[4]==3)*/)
+	{		
+		OUT_WRITE(BEEPER_PIN,1);
+		delay_mcu(10000);
+		OUT_WRITE(BEEPER_PIN,0);
+		delay_mcu(10000);
+		OUT_WRITE(BEEPER_PIN,1);
+		delay_mcu(20000);
+		OUT_WRITE(BEEPER_PIN,0);
+		delay_mcu(20000);
+		OUT_WRITE(BEEPER_PIN,1);
+		delay_mcu(30000);
+		OUT_WRITE(BEEPER_PIN,0);
+		delay_mcu(30000);
+	}
+	else
+	{
+		while(1)
+			OUT_WRITE(BEEPER_PIN,1);
+	}
+	return ;
+
+
+	
+	 
+	//safe_delay(5000);
+}
 inline void gcode_M109() {
 
   if (get_target_extruder_from_command(109)) return;
@@ -12468,6 +12698,7 @@ void process_parsed_command() {
       #endif
 
       case 109: gcode_M109(); break;                              // M109: Set Hotend Temperature. Wait for target.
+      case 1090: gcode_M1090(); break;                              // M109: Set Hotend Temperature. Wait for target.
 
       #if HAS_HEATED_BED
         case 140: gcode_M140(); break;                            // M140: Set Bed Temperature
@@ -14611,7 +14842,7 @@ void setup() {
 
   // Load data from EEPROM if available (or use defaults)
   // This also updates variables in the planner, elsewhere
-  (void)settings.load();
+  int e2prom=settings.load();
   
 
   #if HAS_M206_COMMAND
@@ -14779,12 +15010,40 @@ void setup() {
 
 
   #if ENABLED(USE_WATCHDOG)
-    watchdog_init();
+     watchdog_init();
   #endif
 	//SET_INPUT(0xE0);
+  if(e2prom)
+  	 settings.init_eeprom();
+  
+#if POWER_LOSS_RECOVER_SUPER_CAP  
+   /////////////
+	pinMode(POWER_LOSS_DETECT_PIN, INPUT);
+	 
+	if(recovery_detect_cap.recovery==3)
+	 {
+		 char tmp_d[96];
+		 lcd_recover_menu() ;
+		 SERIAL_ECHOLN("resume 3");
+		 sprintf_P(tmp_d,PSTR("Z%u,E%lu,P%lu,T%u,B%u,"),recovery_detect_cap.Z_t,recovery_detect_cap.E_t,recovery_detect_cap.pos_t,recovery_detect_cap.T0_t,recovery_detect_cap.B_t);
+		 SERIAL_ECHOLN(tmp_d);
+		 sprintf_P(tmp_d,PSTR("%s,"),recovery_detect_cap.file_name);
+		 SERIAL_ECHOLN(tmp_d);
+  
+	 }
+	else
+	   SERIAL_ECHOLN("resume 0");
+  
+	
+#endif  
+
 }
 
 int card_sd_in;
+
+
+//NewSoftSerial mySerial(0xE3, 0xE4);
+
 
 /**
  * The main Marlin program loop
@@ -14802,11 +15061,25 @@ main(int argc, char* argv[])
  {
    	int filemant_stat=0;
 
+   //	filemant_stat=atoi("12.34\n");
    	setup() ;
 	SET_OUTPUT(FAN4_PIN);
 	OUT_WRITE(FAN4_PIN,0);
 	SET_OUTPUT(FAN3_PIN);
-	 
+	OUT_WRITE(HEATER_BED_PIN,0);
+	OUT_WRITE(HEATER_0_PIN,0);
+	OUT_WRITE(HEATER_1_PIN,0);
+//	enqueue_and_echo_command("M1090");
+
+//	SET_OUTPUT(0xFC);
+//	OUT_WRITE(0xFC,0);
+/*	  char tmpp[64];
+	  sprintf(tmpp,"Hello, world?");
+	mySerial.begin(9600);
+	filemant_stat=50;
+	while(filemant_stat++&&filemant_stat<100)
+	mySerial.USART_Send((unsigned char*)tmpp,strlen(tmpp));
+*/
 /*	while(1)
 	{
 	 // OUT_WRITE(0xB7,0);
@@ -14919,5 +15192,48 @@ main(int argc, char* argv[])
 	  idle();
   	}
    card_sd_in=1;
+   
+#if POWER_LOSS_RECOVER_SUPER_CAP  
+	if((commands_in_queue==0)&&(recovery_detect_cap.recovery==1))
+		 {
+		  //////////////////
+		   char dat_tmp[96];
+		   sprintf_P(dat_tmp,PSTR("M190 S%u"),recovery_detect_cap.B_t);
+		   SERIAL_ECHOLN(dat_tmp);
+		   enqueue_and_echo_command(dat_tmp);
+		   sprintf_P(dat_tmp,PSTR("M109 T0 S%u"),recovery_detect_cap.T0_t);
+		   SERIAL_ECHOLN(dat_tmp);
+		   enqueue_and_echo_command(dat_tmp);
+		   sprintf_P(dat_tmp,PSTR("G28 X"));
+		   SERIAL_ECHOLN(dat_tmp);
+		   enqueue_and_echo_command(dat_tmp);
+		   sprintf_P(dat_tmp,PSTR("G28 Y"));
+		   SERIAL_ECHOLN(dat_tmp);
+		   enqueue_and_echo_command(dat_tmp);	   
+		   
+		   sprintf_P(dat_tmp,PSTR("M106 S200"));
+		   SERIAL_ECHOLN(dat_tmp);
+		   enqueue_and_echo_command(dat_tmp);  
+		   
+		   SBI(axis_homed, Z_AXIS);
+		   SBI(axis_known_position, Z_AXIS);
+		   recovery_detect_cap.recovery=2;
+		 }
+	   if((commands_in_queue==0)&&(recovery_detect_cap.recovery==2))
+	   {
+		   char dat_tmp[96];
+		   sprintf(dat_tmp,"M32 S%lu !%s",recovery_detect_cap.pos_t,recovery_detect_cap.file_name); 		
+		   SERIAL_ECHOLN(dat_tmp);
+			   
+   
+			 //memset(print_dir,0,sizeof(print_dir));
+		   recovery_detect_cap.recovery=0;
+		   settings.power_lose_save();	   
+		   enqueue_and_echo_command(dat_tmp);
+		   SERIAL_ECHOLN(dat_tmp);
+		
+	   }   
+	 
+ #endif 
  }
 }

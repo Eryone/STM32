@@ -10,7 +10,9 @@ tmc_util.o: ../tmc_util.cpp ../MarlinConfig.h ../boards.h ../macros.h \
  ../Conditionals_post.h ../SanityCheck.h ../enum.h ../language.h \
  ../language_en.h ../utility.h ../serial.h ../MarlinSerial.h \
  ../tmc_util.h ../TMC2208Stepper/TMC2208Stepper.h \
- ../TMC2208Stepper/../MarlinSerial.h ../Marlin.h \
+ ../TMC2208Stepper/../MarlinSerial.h \
+ ../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h \
+ e:\32eryone\trunk\marlin_stm32f\stream.h ../Marlin.h \
  ../system/include/stm32f10x_it.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_conf.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_adc.h \
@@ -103,6 +105,10 @@ tmc_util.o: ../tmc_util.cpp ../MarlinConfig.h ../boards.h ../macros.h \
 ../TMC2208Stepper/TMC2208Stepper.h:
 
 ../TMC2208Stepper/../MarlinSerial.h:
+
+../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h:
+
+e:\32eryone\trunk\marlin_stm32f\stream.h:
 
 ../Marlin.h:
 

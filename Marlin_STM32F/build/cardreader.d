@@ -40,7 +40,9 @@ cardreader.o: ../cardreader.cpp ../MarlinConfig.h ../boards.h ../macros.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_usart.h ../stepper.h \
  ../planner.h ../speed_lookuptable.h ../stepper_indirection.h \
  ../TMC2208Stepper/TMC2208Stepper.h ../TMC2208Stepper/../MarlinSerial.h \
- ../printcounter.h ../stopwatch.h
+ ../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h \
+ e:\32eryone\trunk\marlin_stm32f\stream.h ../printcounter.h \
+ ../stopwatch.h ../power_loss_recovery.h
 
 ../MarlinConfig.h:
 
@@ -186,6 +188,12 @@ cardreader.o: ../cardreader.cpp ../MarlinConfig.h ../boards.h ../macros.h \
 
 ../TMC2208Stepper/../MarlinSerial.h:
 
+../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h:
+
+e:\32eryone\trunk\marlin_stm32f\stream.h:
+
 ../printcounter.h:
 
 ../stopwatch.h:
+
+../power_loss_recovery.h:

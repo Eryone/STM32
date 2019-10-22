@@ -285,24 +285,23 @@
 
 #include "MarlinSerial.h"
 MarlinSerial customizedSerial5;
-
+/*
 
 #define X_HARDWARE_SERIAL   customizedSerial5
 #define Y_HARDWARE_SERIAL   customizedSerial5
 #define Z_HARDWARE_SERIAL   customizedSerial5
 #define E0_HARDWARE_SERIAL   customizedSerial5
 #define E1_HARDWARE_SERIAL   customizedSerial5
-
+*/
   #if TMC2208STEPPER_VERSION < 0x000101
     #error "Update TMC2208Stepper library to 0.1.1 or newer."
   #endif
 
 
-
  // #define _TMC2208_DEFINE_HARDWARE(ST) TMC2208Stepper stepper##ST(&ST##_HARDWARE_SERIAL)
 #define _TMC2208_DEFINE_HARDWARE(ST) TMC2208Stepper stepper##ST(&ST##_HARDWARE_SERIAL)
-//  #define _TMC2208_DEFINE_SOFTWARE(ST) SoftwareSerial ST##_HARDWARE_SERIAL = SoftwareSerial(ST##_SERIAL_RX_PIN, ST##_SERIAL_TX_PIN); \
- //                                      TMC2208Stepper stepper##ST(&ST##_HARDWARE_SERIAL, ST##_SERIAL_RX_PIN > -1)
+#define _TMC2208_DEFINE_SOFTWARE(ST) NewSoftSerial ST##_HARDWARE_SERIAL = NewSoftSerial(ST##_SERIAL_RX_PIN, ST##_SERIAL_TX_PIN); \
+                                       TMC2208Stepper stepper##ST(ST##_SERIAL_RX_PIN, ST##_SERIAL_TX_PIN)
 #if 1
   // Stepper objects of TMC2208 steppers used
   #if AXIS_DRIVER_TYPE(X, TMC2208)
@@ -385,7 +384,7 @@ MarlinSerial customizedSerial5;
   #endif
 #endif
   void tmc2208_serial_begin() {
-#if 0
+#if 1
     #if AXIS_DRIVER_TYPE(X, TMC2208)
       X_HARDWARE_SERIAL.begin(115200);
     #endif
@@ -428,8 +427,8 @@ MarlinSerial customizedSerial5;
     st.pdn_disable(true); // Use UART
     st.mstep_reg_select(true); // Select microsteps with UART
     st.I_scale_analog(false);
-     st.rms_current(mA, HOLD_MULTIPLIER, R_SENSE);
-  st.microsteps(microsteps );
+    st.rms_current(mA, HOLD_MULTIPLIER, R_SENSE);
+  	st.microsteps(microsteps);
  //  st.microsteps(2);
     st.blank_time(24);
     st.toff(5);

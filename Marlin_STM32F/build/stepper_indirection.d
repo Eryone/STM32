@@ -11,7 +11,9 @@ stepper_indirection.o: ../stepper_indirection.cpp \
  ../Conditionals_post.h ../SanityCheck.h ../enum.h ../language.h \
  ../language_en.h ../utility.h ../serial.h ../MarlinSerial.h \
  ../TMC2208Stepper/TMC2208Stepper.h ../TMC2208Stepper/../MarlinSerial.h \
- ../planner.h ../Marlin.h ../system/include/stm32f10x_it.h \
+ ../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h \
+ e:\32eryone\trunk\marlin_stm32f\stream.h ../planner.h ../Marlin.h \
+ ../system/include/stm32f10x_it.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_conf.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_adc.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_bkp.h \
@@ -102,6 +104,10 @@ stepper_indirection.o: ../stepper_indirection.cpp \
 ../TMC2208Stepper/TMC2208Stepper.h:
 
 ../TMC2208Stepper/../MarlinSerial.h:
+
+../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h:
+
+e:\32eryone\trunk\marlin_stm32f\stream.h:
 
 ../planner.h:
 

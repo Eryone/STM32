@@ -39,7 +39,15 @@ temperature.o: ../temperature.cpp ../Marlin.h ../MarlinConfig.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_usart.h ../temperature.h \
  ../thermistortables.h ../thermistortable_1.h ../thermistortable_13.h \
  ../ultralcd.h ../planner.h ../printcounter.h ../stopwatch.h ../delay.h \
- ../endstops.h ../watchdog.h
+ ../endstops.h ../stepper.h ../speed_lookuptable.h \
+ ../stepper_indirection.h ../TMC2208Stepper/TMC2208Stepper.h \
+ ../TMC2208Stepper/../MarlinSerial.h \
+ ../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h \
+ e:\32eryone\trunk\marlin_stm32f\stream.h ../watchdog.h \
+ ../configuration_store.h ../Buzzer.h ../circularqueue.h \
+ ../power_loss_recovery.h ../cardreader.h ../SdFile.h ../SdBaseFile.h \
+ ../SdFatConfig.h ../SdVolume.h ../Sd2Card.h ../SdInfo.h \
+ ../SdFatStructs.h
 
 ../Marlin.h:
 
@@ -175,4 +183,42 @@ temperature.o: ../temperature.cpp ../Marlin.h ../MarlinConfig.h \
 
 ../endstops.h:
 
+../stepper.h:
+
+../speed_lookuptable.h:
+
+../stepper_indirection.h:
+
+../TMC2208Stepper/TMC2208Stepper.h:
+
+../TMC2208Stepper/../MarlinSerial.h:
+
+../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h:
+
+e:\32eryone\trunk\marlin_stm32f\stream.h:
+
 ../watchdog.h:
+
+../configuration_store.h:
+
+../Buzzer.h:
+
+../circularqueue.h:
+
+../power_loss_recovery.h:
+
+../cardreader.h:
+
+../SdFile.h:
+
+../SdBaseFile.h:
+
+../SdFatConfig.h:
+
+../SdVolume.h:
+
+../Sd2Card.h:
+
+../SdInfo.h:
+
+../SdFatStructs.h:

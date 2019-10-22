@@ -1,16 +1,24 @@
-configuration_store.o: ../configuration_store.cpp \
- ../configuration_store.h ../MarlinConfig.h ../boards.h ../macros.h \
+NewSoftSerial/NewSoftSerial.o: ../NewSoftSerial/NewSoftSerial.cpp \
+ ../NewSoftSerial/NewSoftSerial.h ../NewSoftSerial/../Stream.h \
+ ../NewSoftSerial/icrmacros.h ../NewSoftSerial/../Macros.h \
  ../system/include/cmsis/stm32f10x.h ../system/include/cmsis/core_cm3.h \
  ../system/include/cmsis/core_cmInstr.h \
  ../system/include/cmsis/cmsis_gcc.h \
  ../system/include/cmsis/core_cmFunc.h \
- ../system/include/cmsis/system_stm32f10x.h ../drivers.h ../Version.h \
- ../Configuration.h ../Conditionals_LCD.h ../Configuration_adv.h \
- ../types.h ../HAL.h ../fastio.h ../fastio_1280.h \
- ../system/include/Arduino.h ../pins.h ../pins_ERYONE_STM32F103.h \
- ../Conditionals_post.h ../SanityCheck.h ../enum.h ../language.h \
- ../language_en.h ../utility.h ../serial.h ../MarlinSerial.h ../Marlin.h \
- ../system/include/stm32f10x_it.h \
+ ../system/include/cmsis/system_stm32f10x.h ../NewSoftSerial/../Marlin.h \
+ ../NewSoftSerial/../MarlinConfig.h ../NewSoftSerial/../boards.h \
+ ../NewSoftSerial/../macros.h ../NewSoftSerial/../drivers.h \
+ ../NewSoftSerial/../Version.h ../NewSoftSerial/../Configuration.h \
+ ../NewSoftSerial/../Conditionals_LCD.h \
+ ../NewSoftSerial/../Configuration_adv.h ../NewSoftSerial/../types.h \
+ ../NewSoftSerial/../HAL.h ../NewSoftSerial/../fastio.h \
+ ../NewSoftSerial/../fastio_1280.h ../system/include/Arduino.h \
+ ../NewSoftSerial/../pins.h ../NewSoftSerial/../pins_ERYONE_STM32F103.h \
+ ../NewSoftSerial/../Conditionals_post.h \
+ ../NewSoftSerial/../SanityCheck.h ../NewSoftSerial/../enum.h \
+ ../NewSoftSerial/../language.h ../NewSoftSerial/../language_en.h \
+ ../NewSoftSerial/../utility.h ../NewSoftSerial/../serial.h \
+ ../NewSoftSerial/../MarlinSerial.h ../system/include/stm32f10x_it.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_conf.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_adc.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_bkp.h \
@@ -36,26 +44,15 @@ configuration_store.o: ../configuration_store.cpp \
  ../system/include/stm32f1-stdperiph/stm32f10x_usart.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_wwdg.h \
  ../system/include/stm32f1-stdperiph/misc.h \
- ../system/include/stm32f1-stdperiph/stm32f10x_usart.h ../endstops.h \
- ../planner.h ../temperature.h ../thermistortables.h \
- ../thermistortable_1.h ../thermistortable_13.h ../ultralcd.h \
- ../stepper.h ../speed_lookuptable.h ../stepper_indirection.h \
- ../TMC2208Stepper/TMC2208Stepper.h ../TMC2208Stepper/../MarlinSerial.h \
- ../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h \
- e:\32eryone\trunk\marlin_stm32f\stream.h ../parser.h ../vector_3.h \
- ../system/include/stmflash.h \
- ../system/include/stm32f1-stdperiph/stm32f10x_flash.h \
- ../power_loss_recovery.h ../cardreader.h ../SdFile.h ../SdBaseFile.h \
- ../SdFatConfig.h ../SdVolume.h ../Sd2Card.h ../SdInfo.h \
- ../SdFatStructs.h ../watchdog.h ../tmc_util.h
+ ../system/include/stm32f1-stdperiph/stm32f10x_usart.h
 
-../configuration_store.h:
+../NewSoftSerial/NewSoftSerial.h:
 
-../MarlinConfig.h:
+../NewSoftSerial/../Stream.h:
 
-../boards.h:
+../NewSoftSerial/icrmacros.h:
 
-../macros.h:
+../NewSoftSerial/../Macros.h:
 
 ../system/include/cmsis/stm32f10x.h:
 
@@ -69,47 +66,53 @@ configuration_store.o: ../configuration_store.cpp \
 
 ../system/include/cmsis/system_stm32f10x.h:
 
-../drivers.h:
+../NewSoftSerial/../Marlin.h:
 
-../Version.h:
+../NewSoftSerial/../MarlinConfig.h:
 
-../Configuration.h:
+../NewSoftSerial/../boards.h:
 
-../Conditionals_LCD.h:
+../NewSoftSerial/../macros.h:
 
-../Configuration_adv.h:
+../NewSoftSerial/../drivers.h:
 
-../types.h:
+../NewSoftSerial/../Version.h:
 
-../HAL.h:
+../NewSoftSerial/../Configuration.h:
 
-../fastio.h:
+../NewSoftSerial/../Conditionals_LCD.h:
 
-../fastio_1280.h:
+../NewSoftSerial/../Configuration_adv.h:
+
+../NewSoftSerial/../types.h:
+
+../NewSoftSerial/../HAL.h:
+
+../NewSoftSerial/../fastio.h:
+
+../NewSoftSerial/../fastio_1280.h:
 
 ../system/include/Arduino.h:
 
-../pins.h:
+../NewSoftSerial/../pins.h:
 
-../pins_ERYONE_STM32F103.h:
+../NewSoftSerial/../pins_ERYONE_STM32F103.h:
 
-../Conditionals_post.h:
+../NewSoftSerial/../Conditionals_post.h:
 
-../SanityCheck.h:
+../NewSoftSerial/../SanityCheck.h:
 
-../enum.h:
+../NewSoftSerial/../enum.h:
 
-../language.h:
+../NewSoftSerial/../language.h:
 
-../language_en.h:
+../NewSoftSerial/../language_en.h:
 
-../utility.h:
+../NewSoftSerial/../utility.h:
 
-../serial.h:
+../NewSoftSerial/../serial.h:
 
-../MarlinSerial.h:
-
-../Marlin.h:
+../NewSoftSerial/../MarlinSerial.h:
 
 ../system/include/stm32f10x_it.h:
 
@@ -164,61 +167,3 @@ configuration_store.o: ../configuration_store.cpp \
 ../system/include/stm32f1-stdperiph/misc.h:
 
 ../system/include/stm32f1-stdperiph/stm32f10x_usart.h:
-
-../endstops.h:
-
-../planner.h:
-
-../temperature.h:
-
-../thermistortables.h:
-
-../thermistortable_1.h:
-
-../thermistortable_13.h:
-
-../ultralcd.h:
-
-../stepper.h:
-
-../speed_lookuptable.h:
-
-../stepper_indirection.h:
-
-../TMC2208Stepper/TMC2208Stepper.h:
-
-../TMC2208Stepper/../MarlinSerial.h:
-
-../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h:
-
-e:\32eryone\trunk\marlin_stm32f\stream.h:
-
-../parser.h:
-
-../vector_3.h:
-
-../system/include/stmflash.h:
-
-../system/include/stm32f1-stdperiph/stm32f10x_flash.h:
-
-../power_loss_recovery.h:
-
-../cardreader.h:
-
-../SdFile.h:
-
-../SdBaseFile.h:
-
-../SdFatConfig.h:
-
-../SdVolume.h:
-
-../Sd2Card.h:
-
-../SdInfo.h:
-
-../SdFatStructs.h:
-
-../watchdog.h:
-
-../tmc_util.h:

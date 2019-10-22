@@ -49,6 +49,14 @@
 #if ENABLED(EMERGENCY_PARSER)
   #include "emergency_parser.h"
 #endif
+#if POWER_LOSS_RECOVER_SUPER_CAP
+	#include "configuration_store.h"
+	#include "Buzzer.h"
+	#include "printcounter.h"
+	#include "power_loss_recovery.h"
+	extern Buzzer buzzer;
+	extern MarlinSettings settings;
+#endif
 
 #if HOTEND_USES_THERMISTOR
   #if ENABLED(TEMP_SENSOR_1_AS_REDUNDANT)
@@ -915,16 +923,18 @@ void Temperature::manage_heater() {
 		temp_fan=gt[3]>40.0?1:0;
 		if(gt[3])
 		{
-			if(board_fan_old!=temp_fan)
+			if(board_fan_old!=temp_fan)// main board
 			{
 				board_fan_old=temp_fan;
 				OUT_WRITE(FAN4_PIN,temp_fan);
 			}
 		}
+		//if(gt[0]<=0)
+		//	Get_Temperature(0);
 		if(gt[0])
 		{
-			temp_fan=gt[0]>100.0?1:0;
-			if(nozzel_fan_old!=temp_fan)
+			temp_fan=gt[0]>50.0?1:0;
+			if(nozzel_fan_old!=temp_fan) // nozzel
 			{
 				nozzel_fan_old=temp_fan;
 				OUT_WRITE(FAN3_PIN,temp_fan);
@@ -1959,6 +1969,57 @@ HAL_TEMP_TIMER_ISR {
 #endif
 void Temperature::isr() {
   Temperature_Handler();
+
+////////////////////////////
+  if(current_temperature[0]>50&&fanSpeeds[2]<=100)
+  {
+
+	 fanSpeeds[2]=255;
+
+
+  }
+  else if (current_temperature[0]<50&&fanSpeeds[2]>100)
+  {
+
+	   fanSpeeds[2]=0; 
+
+  }
+/////////////////////////////////////// 
+
+#if POWER_LOSS_RECOVER_SUPER_CAP
+			char tmp_d[32];
+			static char  test=0;
+		   if((digitalRead(POWER_LOSS_DETECT_PIN)==0)&&(recovery_detect_cap.file_name[0])&&(recovery_detect_cap.recovery==0)&&(print_job_timer.isRunning()==true))// power off
+			{
+			  // SERIAL_ECHOLN("Down0");
+			  // enquecommand("M929");
+			  recovery_detect_cap.T0_t=thermalManager.degTargetHotend(0)+0.5;
+			  recovery_detect_cap.B_t=thermalManager.degTargetBed()+0.5;
+			  ////////////
+			  thermalManager.disable_all_heaters();
+			  disable_all_steppers();
+			  //////////////
+			 recovery_detect_cap.Z_t=LOGICAL_Z_POSITION(current_position[Z_AXIS])*10;
+			 recovery_detect_cap.E_t=current_position[E_AXIS];
+			 recovery_detect_cap.pos_t=card.getStatus();
+			 recovery_detect_cap.recovery=3;
+			// sprintf_P(tmp_d,PSTR("Z%u,E%lu,P%lu,T%u,B%u,"),Z_t,E_t,pos_t,T0_t,B_t);
+			//		  SERIAL_ECHOLN(tmp_d);
+	
+			 //settings.save();
+			 settings.power_lose_save();
+			 SERIAL_ECHOLN("save ok");
+		//	 settings.load();
+			 
+			 sprintf_P(tmp_d,PSTR("Z%u,E%lu,P%lu,T%u,B%u,"),recovery_detect_cap.Z_t,recovery_detect_cap.E_t,recovery_detect_cap.pos_t,recovery_detect_cap.T0_t,recovery_detect_cap.B_t);
+			 SERIAL_ECHOLN(tmp_d);
+			 sprintf_P(tmp_d,PSTR("%s, save end--------"),recovery_detect_cap.file_name);
+			 SERIAL_ECHOLN(tmp_d);
+#if ENABLED(USE_WATCHDOG)
+			 while(1);
+#endif
+			}
+#endif
 
   static int8_t temp_count = -1;
   static ADCSensorState adc_sensor_state = StartupDelay;

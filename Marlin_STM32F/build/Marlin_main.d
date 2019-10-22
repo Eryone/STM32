@@ -39,14 +39,17 @@ Marlin_main.o: ../Marlin_main.cpp ../Marlin.h ../MarlinConfig.h \
  ../system/include/stm32f1-stdperiph/stm32f10x_usart.h ../ultralcd.h \
  ../planner.h ../stepper.h ../speed_lookuptable.h \
  ../stepper_indirection.h ../TMC2208Stepper/TMC2208Stepper.h \
- ../TMC2208Stepper/../MarlinSerial.h ../endstops.h ../temperature.h \
+ ../TMC2208Stepper/../MarlinSerial.h \
+ ../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h \
+ e:\32eryone\trunk\marlin_stm32f\stream.h ../endstops.h ../temperature.h \
  ../thermistortables.h ../thermistortable_1.h ../thermistortable_13.h \
  ../cardreader.h ../SdFile.h ../SdBaseFile.h ../SdFatConfig.h \
  ../SdVolume.h ../Sd2Card.h ../SdInfo.h ../SdFatStructs.h \
  ../configuration_store.h ../nozzle.h ../point_t.h ../printcounter.h \
- ../stopwatch.h ../duration_t.h ../parser.h ../planner_bezier.h \
- ../buzzer.h ../circularqueue.h ../watchdog.h ../tmc_util.h \
- ../SdFatUtil.h
+ ../stopwatch.h ../duration_t.h ../parser.h \
+ ../NewSoftSerial/NewSoftSerial.h ../power_loss_recovery.h \
+ ../planner_bezier.h ../buzzer.h ../circularqueue.h ../watchdog.h \
+ ../tmc_util.h ../SdFatUtil.h
 
 ../Marlin.h:
 
@@ -176,6 +179,10 @@ Marlin_main.o: ../Marlin_main.cpp ../Marlin.h ../MarlinConfig.h \
 
 ../TMC2208Stepper/../MarlinSerial.h:
 
+../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h:
+
+e:\32eryone\trunk\marlin_stm32f\stream.h:
+
 ../endstops.h:
 
 ../temperature.h:
@@ -215,6 +222,10 @@ Marlin_main.o: ../Marlin_main.cpp ../Marlin.h ../MarlinConfig.h \
 ../duration_t.h:
 
 ../parser.h:
+
+../NewSoftSerial/NewSoftSerial.h:
+
+../power_loss_recovery.h:
 
 ../planner_bezier.h:
 

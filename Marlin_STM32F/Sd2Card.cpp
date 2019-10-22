@@ -541,8 +541,8 @@ bool Sd2Card::readData(uint8_t* dst, uint16_t count) {
   }
 #else
   // discard CRC
-  //spiRec();
-  //spiRec();
+  spiRec();
+  spiRec();
 #endif
   chipSelectHigh();
   // Send an additional dummy byte, required by Toshiba Flash Air SD Card

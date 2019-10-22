@@ -158,6 +158,7 @@
 
 ///
 #define BOARD_ERYONE_STM32F103           100    //  
+#define BOARD_ERYONE_STM32F103_MINI           101    //  
 
 #define MB(board) (defined(BOARD_##board) && MOTHERBOARD==BOARD_##board)
 

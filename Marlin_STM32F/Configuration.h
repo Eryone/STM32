@@ -127,7 +127,7 @@
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_ERYONE_STM32F103//BOARD_RAMPS_14_EFB
+  #define MOTHERBOARD BOARD_ERYONE_STM32F103 //BOARD_ERYONE_STM32F103//BOARD_RAMPS_14_EFB
 #endif
 
 // Optional custom name for your RepStrap or other custom machine
@@ -725,6 +725,11 @@
 //#define BLTOUCH
 #if ENABLED(BLTOUCH)||ENABLED(FIX_MOUNTED_PROBE)
   // #define BLTOUCH_DELAY 375   // (ms) Enable and increase if needed
+
+#else
+// power lose detect pin and super capacitor for save data
+	#define POWER_LOSS_RECOVER_SUPER_CAP 1
+
 #endif
 
 /**

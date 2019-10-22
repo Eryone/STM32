@@ -65,6 +65,11 @@
   #include "power_loss_recovery.h"
 #endif
 
+#if POWER_LOSS_RECOVER_SUPER_CAP
+#include "power_loss_recovery.h"
+
+#endif
+
 #if ENABLED(STATUS_MESSAGE_SCROLLING)
   #if LONG_FILENAME_LENGTH > CHARSIZE * 2 * (LCD_WIDTH)
     #define MAX_MESSAGE_LENGTH LONG_FILENAME_LENGTH
@@ -636,6 +641,54 @@ uint16_t max_display_update_time = 0;
   }
 
 #endif // ULTIPANEL
+#if POWER_LOSS_RECOVER_SUPER_CAP
+void lcd_recover_ok(void) 
+{
+  char tmp_n[64];
+  recovery_detect_cap.recovery=0;
+  lcd_goto_screen(lcd_status_screen);
+  SERIAL_ECHOLN(recovery_detect_cap.file_name);
+  recovery_detect_cap.recovery=1; 
+  sprintf_P(tmp_n,PSTR("G92 Z%u.%u"),recovery_detect_cap.Z_t/10,recovery_detect_cap.Z_t%10);
+  SERIAL_ECHOLN(tmp_n);
+  enqueue_and_echo_command(tmp_n);
+  sprintf_P(tmp_n,PSTR("G92 E%u"),recovery_detect_cap.E_t);
+  SERIAL_ECHOLN(tmp_n);
+  enqueue_and_echo_command(tmp_n);
+  sprintf_P(tmp_n,PSTR("M104 S%u"),recovery_detect_cap.T0_t);
+  SERIAL_ECHOLN(tmp_n);
+  enqueue_and_echo_command(tmp_n);
+}
+void lcd_cover_cancel(void) 
+{
+   char tmp_n[32];
+  recovery_detect_cap.recovery=0;
+  recovery_detect_cap.file_name[0]=0;  
+  sprintf_P(tmp_n,PSTR("M500"));
+  SERIAL_ECHOLN(tmp_n);
+  enqueue_and_echo_command(tmp_n);
+  lcd_goto_screen(lcd_status_screen);
+   
+ 
+}
+
+void lcd_recovery(void) 
+{
+  START_MENU();
+  MENU_ITEM(submenu, "Resume Print ?", lcd_recovery);
+  MENU_ITEM(submenu, "YES  ", lcd_recover_ok); 
+  MENU_ITEM(submenu, "NO  ", lcd_cover_cancel);
+  END_MENU();
+
+}
+
+
+void lcd_recover_menu(void) 
+{
+	lcd_goto_screen(lcd_recovery);
+
+}
+#endif
 
 /**
  *
@@ -4967,6 +5020,11 @@ void lcd_quick_feedback(const bool clear_buttons) {
         last_sdfile_encoderPosition = encoderPosition;  // Save which file was selected for later use
       #endif
       card.openAndPrintFile(theCard.filename);
+#if POWER_LOSS_RECOVER_SUPER_CAP	  
+	  strcpy(recovery_detect_cap.file_name,  theCard.filename);
+      SERIAL_ECHOLN(theCard.filename);
+	  recovery_detect_cap.recovery=0;
+#endif		  
       lcd_return_to_status();
       lcd_reset_status();
     }
@@ -5383,7 +5441,12 @@ void lcd_update() {
       // Return to Status Screen after a timeout
       if (currentScreen == lcd_status_screen || defer_return_to_status)
         return_to_status_ms = ms + LCD_TIMEOUT_TO_STATUS;
+     // else if (ELAPSED(ms, return_to_status_ms))
+#if POWER_LOSS_RECOVER_SUPER_CAP		
+      else if (ELAPSED(ms, return_to_status_ms)&&(recovery_detect_cap.recovery!=3))
+#else
       else if (ELAPSED(ms, return_to_status_ms))
+#endif	
         lcd_return_to_status();
 
     #endif // ULTIPANEL

@@ -267,6 +267,9 @@
 #elif MB(ERYONE_STM32F103)
   #include "pins_ERYONE_STM32F103.h"   
 
+#elif MB(ERYONE_STM32F103_MINI)
+  #include "pins_ERYONE_STM32F103_MINI.h"
+
 #else
   #error "Unknown MOTHERBOARD value set in Configuration.h"
 #endif

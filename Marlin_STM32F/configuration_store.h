@@ -33,6 +33,10 @@ class MarlinSettings {
 
     static void reset();
     static bool save();   // Return 'true' if data was saved
+#if POWER_LOSS_RECOVER_SUPER_CAP	
+		static bool power_lose_save();
+		static bool power_lose_load();
+#endif	 
 
     FORCE_INLINE static bool init_eeprom() {
       reset();

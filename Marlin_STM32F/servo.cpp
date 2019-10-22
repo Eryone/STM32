@@ -40,7 +40,7 @@
  * attach(pin, min, max) - Attach to a pin, setting min and max values in microseconds
  *                         Default min is 544, max is 2400
  *
- * write()               - Set the servo angle in degrees. (Invalid angles 鈥攐ver MIN_PULSE_WIDTH鈥� are treated as 碌s.)
+ * write()               - Set the servo angle in degrees. (Invalid angles éˆ¥æ”ver MIN_PULSE_WIDTHéˆ¥ï¿½ are treated as ç¢Œs.)
  * writeMicroseconds()   - Set the servo pulse width in microseconds.
  * move(pin, angle)      - Sequence of attach(pin), write(angle), delay(SERVO_DELAY).
  *                         With DEACTIVATE_SERVOS_AFTER_MOVE it detaches after SERVO_DELAY.
@@ -154,51 +154,92 @@ static void initISR(timer16_Sequence_t timer) {
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
     TIM_OCInitTypeDef  TIM_OCInitStructure;
 	GPIO_InitTypeDef GPIO_InitStructure;
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE); //ʹ�� TIMx ����
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); //ʹ�� PB ʱ��
+    RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE); //Ê¹ï¿½ï¿½ TIMx ï¿½ï¿½ï¿½ï¿½
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); //Ê¹ï¿½ï¿½ PB Ê±ï¿½ï¿½
 
-    /* ����TIM4CLKΪ72MHZ */
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+    /* ï¿½ï¿½ï¿½ï¿½TIM4CLKÎª72MHZ */
+    RCC_APB1PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
 
     /* GPIOB clock enable, Enable AFIO function */
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
     
     /* PB6,7,8,9 -> timer4: Config to PWM output mode */
-    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;            // �����������
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     
-    GPIO_InitStructure.GPIO_Pin =   GPIO_Pin_9;
-    GPIO_Init(GPIOB, &GPIO_InitStructure);  
+    GPIO_InitStructure.GPIO_Pin =   GPIO_Pin_10;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);  
 	///////////////////
+
+
 	
-	TIM_DeInit(TIM4);
-    TIM_InternalClockConfig(TIM4);  
-    
+	 /* TIM1 clock enable */
+	 RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE);
+	
+	 /* GPIOA and GPIOB clock enable */
+	 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+	   
+	 GPIO_InitStructure.GPIO_Pin =	  GPIO_Pin_10;
+	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	 GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	
+	 GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+
+
+	
+	TIM_DeInit(TIM1);
+    TIM_InternalClockConfig(TIM1);  
+#if 1    
     /* Time base configuration */    
     TIM_TimeBaseStructure.TIM_Prescaler = 35; //(72-1);       // prescaler = 71, TIM_CLK = 72MHZ/(71+1) = 1MHZ.    
-    TIM_TimeBaseStructure.TIM_Period = PWM_FREQENCY -1 ;         // ����ʱ����0������999����Ϊ1000�Σ�Ϊһ����ʱ����
+    TIM_TimeBaseStructure.TIM_Period = PWM_FREQENCY -1 ;         // ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½999ï¿½ï¿½ï¿½ï¿½Îª1000ï¿½Î£ï¿½ÎªÒ»ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
                                                     // pwm F = 1MHZ/(3999+1) = 250HZ.  
-    TIM_TimeBaseStructure.TIM_ClockDivision =100;// TIM_CKD_DIV1 ;    //����ʱ�ӷ�Ƶϵ��������Ƶ(�����ò���)
-    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //���ϼ���ģʽ
-    TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+    TIM_TimeBaseStructure.TIM_ClockDivision =100;// TIM_CKD_DIV1 ;    //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ó·ï¿½ÆµÏµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµ(ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½)
+    TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  //ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½Ä£Ê½
+    TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure);
     
-    TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;       //����ΪPWMģʽ1
-    TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;  //����ʱ������ֵС��CCR1_ValʱΪ�ߵ�ƽ
+    TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;       //ï¿½ï¿½ï¿½ï¿½ÎªPWMÄ£Ê½1
+    TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;  //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÐ¡ï¿½ï¿½CCR1_ValÊ±Îªï¿½ßµï¿½Æ½
 
 
-    /* PWM1 Mode configuration: Channel4 */
+    /* PWM1 Mode configuration: Channel3 */
     TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-    TIM_OCInitStructure.TIM_Pulse = 0;//(1000 * PWM_FREQENCY )/100;            //����ͨ��4�ĵ�ƽ����ֵ���������һ��ռ�ձȵ�PWM
-    TIM_OC4Init(TIM4, &TIM_OCInitStructure);                        //ʹ��ͨ��4
-    TIM_OC4PreloadConfig(TIM4, TIM_OCPreload_Enable);
+    TIM_OCInitStructure.TIM_Pulse =  0;//1000 * PWM_FREQENCY )/100;            //ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½4ï¿½Äµï¿½Æ½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Õ¼ï¿½Õ±Èµï¿½PWM
+    TIM_OC3Init(TIM1, &TIM_OCInitStructure);                        //Ê¹ï¿½ï¿½Í¨ï¿½ï¿½4
+    TIM_OC3PreloadConfig(TIM1, TIM_OCPreload_Enable);
 
-    TIM_ARRPreloadConfig(TIM4, ENABLE);                                // ʹ��TIM3���ؼĴ���ARR
-	TIM_CtrlPWMOutputs(TIM4,ENABLE);  //MOE �����ʹ��,�߼���ʱ�����뿪��
+    TIM_ARRPreloadConfig(TIM1, ENABLE);                                // Ê¹ï¿½ï¿½TIM3ï¿½ï¿½ï¿½Ø¼Ä´ï¿½ï¿½ï¿½ARR
+	TIM_CtrlPWMOutputs(TIM1,ENABLE);  //MOE ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½,ï¿½ß¼ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ë¿ªï¿½ï¿½
 
     /* TIM4 enable counter */
-    TIM_Cmd(TIM4, ENABLE);                                         //ʹ�ܶ�ʱ��4
+    TIM_Cmd(TIM1, ENABLE);                                         //Ê¹ï¿½Ü¶ï¿½Ê±ï¿½ï¿½4
+#else
+/////////////
+/* PWM1 Mode configuration: Channel3 */
+    TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM2;
+    TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+    TIM_OCInitStructure.TIM_OutputNState = TIM_OutputNState_Enable;
+    TIM_OCInitStructure.TIM_Pulse = (1000 * PWM_FREQENCY )/100;  //CCR3_Val;
+    TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+    TIM_OCInitStructure.TIM_OCNPolarity = TIM_OCNPolarity_High;
+    TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Reset;
+    TIM_OCInitStructure.TIM_OCNIdleState = TIM_OCIdleState_Reset;      
+    TIM_OC3Init(TIM1, &TIM_OCInitStructure);
+    TIM_OC3PreloadConfig(TIM1, TIM_OCPreload_Enable);    
+
+    TIM_ARRPreloadConfig(TIM1, ENABLE);//ÖØÔØ×°ÔØÖµ ENABLE Á¢¼´ÉúÐ§£¬DISABLE ÏÂÒ»¸ö±È½ÏÖÜÆÚÉúÐ§
+
+    /* TIM1 enable counter */
+    TIM_Cmd(TIM1, ENABLE);//Ê¹ÄÜ¶¨Ê±Æ÷1
+    
+    TIM_CtrlPWMOutputs(TIM1, ENABLE);//Ê¹ÄÜPWMÍâÎ§Êä³ö  
+#endif
 
 
+
+
+////////////
  
 
 #else
@@ -344,7 +385,7 @@ void Servo::write(int value) {
 #if STM32_LJ	
 	if (value < MIN_PULSE_WIDTH) { // treat values less than 544 as angles in degrees (valid values in microseconds are handled as microseconds)
 	  value = map(constrain(value, 0, 180), 0, 180, 500, 2500);
-	  TIM_SetCompare4(TIM4, value); //
+	  TIM_SetCompare3(TIM1, value); //
 	//  TIM_SetCompare4(TIM4, (( value * (PWM_FREQENCY/100))));
 	}
 #else	 

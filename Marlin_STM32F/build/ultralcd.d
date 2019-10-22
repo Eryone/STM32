@@ -41,9 +41,11 @@ ultralcd.o: ../ultralcd.cpp ../MarlinConfig.h ../boards.h ../macros.h \
  ../thermistortable_1.h ../thermistortable_13.h ../planner.h ../stepper.h \
  ../speed_lookuptable.h ../stepper_indirection.h \
  ../TMC2208Stepper/TMC2208Stepper.h ../TMC2208Stepper/../MarlinSerial.h \
- ../configuration_store.h ../parser.h ../buzzer.h ../circularqueue.h \
- ../printcounter.h ../stopwatch.h ../ultralcd_impl_DOGM.h ../U8glib.h \
- ../utility/u8g.h ../dogm_bitmaps.h ../duration_t.h \
+ ../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h \
+ e:\32eryone\trunk\marlin_stm32f\stream.h ../configuration_store.h \
+ ../parser.h ../buzzer.h ../circularqueue.h ../printcounter.h \
+ ../stopwatch.h ../power_loss_recovery.h ../ultralcd_impl_DOGM.h \
+ ../U8glib.h ../utility/u8g.h ../dogm_bitmaps.h ../duration_t.h \
  ../ultralcd_st7920_u8glib_rrd.h ../delay.h \
  ../dogm_font_data_Marlin_symbols.h ../dogm_font_data_ISO10646_1.h \
  ../utf_mapper.h ../status_screen_DOGM.h
@@ -200,6 +202,10 @@ ultralcd.o: ../ultralcd.cpp ../MarlinConfig.h ../boards.h ../macros.h \
 
 ../TMC2208Stepper/../MarlinSerial.h:
 
+../TMC2208Stepper/../NewSoftSerial/NewSoftSerial.h:
+
+e:\32eryone\trunk\marlin_stm32f\stream.h:
+
 ../configuration_store.h:
 
 ../parser.h:
@@ -211,6 +217,8 @@ ultralcd.o: ../ultralcd.cpp ../MarlinConfig.h ../boards.h ../macros.h \
 ../printcounter.h:
 
 ../stopwatch.h:
+
+../power_loss_recovery.h:
 
 ../ultralcd_impl_DOGM.h:
 

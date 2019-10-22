@@ -29,6 +29,8 @@ TMC2208Stepper/source/TMC2208Stepper_OTP_READ.o: \
  ../TMC2208Stepper/source/../../utility.h \
  ../TMC2208Stepper/source/../../serial.h \
  ../TMC2208Stepper/source/../../MarlinSerial.h \
+ e:\luojin\stm32\m32\marlin_main\newsoftserial\newsoftserial.h \
+ e:\luojin\stm32\m32\marlin_main\stream.h \
  ../TMC2208Stepper/source/TMC2208Stepper_MACROS.h \
  ../TMC2208Stepper/source/../TMC2208Stepper_REGDEFS.h
 
@@ -93,6 +95,10 @@ TMC2208Stepper/source/TMC2208Stepper_OTP_READ.o: \
 ../TMC2208Stepper/source/../../serial.h:
 
 ../TMC2208Stepper/source/../../MarlinSerial.h:
+
+e:\luojin\stm32\m32\marlin_main\newsoftserial\newsoftserial.h:
+
+e:\luojin\stm32\m32\marlin_main\stream.h:
 
 ../TMC2208Stepper/source/TMC2208Stepper_MACROS.h:
 

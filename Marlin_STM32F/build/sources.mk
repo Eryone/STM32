@@ -28,6 +28,7 @@ CPP_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
+NewSoftSerial \
 TMC2208Stepper/source \
 system/src/cmsis \
 system/src/cortexm \

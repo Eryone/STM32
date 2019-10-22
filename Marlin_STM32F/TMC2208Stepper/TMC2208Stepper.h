@@ -5,12 +5,13 @@
 	#include <Arduino.h>
 #endif
 
-#define SW_CAPABLE_PLATFORM defined(__AVR__) || defined(TARGET_LPC1768)
+#define SW_CAPABLE_PLATFORM  STM32_LJ //defined(__AVR__) || defined(TARGET_LPC1768)
 #include "../MarlinSerial.h"
 
 //#include "../Stream.h"
 #if SW_CAPABLE_PLATFORM
-	#include <SoftwareSerial.h>
+	//#include <SoftwareSerial.h>
+	#include "../NewSoftSerial/NewSoftSerial.h"
 #endif
 
 #define TMC2208STEPPER_VERSION 0x000205 // v0.2.5
@@ -219,7 +220,7 @@ class TMC2208Stepper {
 	private:
 		//Stream * HWSerial = 0;
 		#if SW_CAPABLE_PLATFORM
-			SoftwareSerial * SWSerial = NULL;
+			NewSoftSerial * SWSerial = NULL;
 			bool uses_sw_serial;
 		#else
 			constexpr static bool uses_sw_serial = false;
