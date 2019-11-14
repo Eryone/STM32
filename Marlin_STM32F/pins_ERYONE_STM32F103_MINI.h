@@ -32,16 +32,17 @@
 //
 // Servos
 //
-
-#define SERVO0_PIN       0xB9// 0xBE
+#define POWER_LOSS_DETECT_PIN   0xC0
+#define CUT1_PIN 0xDD
+#define SERVO0_PIN       0xC6// 0xBE
 //
 // Limit Switches
 //
-#define X_MIN_PIN           0xD7//0xE5
+#define X_MIN_PIN           0xDA//0xE5
 #ifndef X_MAX_PIN
   #define X_MAX_PIN        // 0xBE//0xE4
 #endif
-#define Y_MIN_PIN          0xB7//0xE3
+#define Y_MIN_PIN          0xDB//0xE3
 #define Y_MAX_PIN          //0xBD//0xE2
 
 #define Z_MAX_PIN          // 0xB8//0xE0
@@ -50,7 +51,7 @@
 #define Z_MIN_PIN           0xE4
 
 #else
-#define Z_MIN_PIN            0xB8//0xE1
+#define Z_MIN_PIN            0xDC//0xE1
 
 #endif
 
@@ -63,27 +64,27 @@
 //
 // Steppers
 //
-#define X_STEP_PIN         0xBF//0xE3//0xC6
-#define X_DIR_PIN          0xBE//0xDD
-#define X_ENABLE_PIN       0xDB//0xA8//38
-#define X_CS_PIN           53
+#define X_STEP_PIN         0xC5//0xE3//0xC6
+#define X_DIR_PIN          0xC4//0xDD
+#define X_ENABLE_PIN       0xB9//0xA8//38
+#define X_CS_PIN           0
 
-#define Y_STEP_PIN        0xC6// 0xAC
-#define Y_DIR_PIN         0xDF// 0xAB
-#define Y_ENABLE_PIN      0xC7//0XAF
-#define Y_CS_PIN           49
+#define Y_STEP_PIN        0xE8// 0xAC
+#define Y_DIR_PIN         0xE7// 0xAB
+#define Y_ENABLE_PIN      0xEB//0XAF
+#define Y_CS_PIN           0
 
-#define Z_STEP_PIN         0xAB// 0xD6
-#define Z_DIR_PIN          0xAA//0xD3
-#define Z_ENABLE_PIN       0xAF//0xA3
-#define Z_CS_PIN           40
+#define Z_STEP_PIN         0xED// 0xD6
+#define Z_DIR_PIN          0xEC//0xD3
+#define Z_ENABLE_PIN       0xBA//0xA3
+#define Z_CS_PIN           0
 
 
-#define E0_STEP_PIN        0xDD//0xB2
-#define E0_DIR_PIN         0xDC//0xBB
-#define E0_ENABLE_PIN      0xDE//0xC4
+#define E0_STEP_PIN        0xBF//0xB2
+#define E0_DIR_PIN         0xBB//0xBB
+#define E0_ENABLE_PIN      0xBC//0xC4
 #ifndef E0_CS_PIN
-#define E0_CS_PIN          42
+#define E0_CS_PIN          0
 #endif
 
 #define E1_STEP_PIN        0xA8
@@ -131,23 +132,23 @@
    * Software serial
    */
 
-  #define X_SERIAL_TX_PIN    40
-  #define X_SERIAL_RX_PIN    63
+  #define X_SERIAL_TX_PIN    0XB0
+  #define X_SERIAL_RX_PIN    0
   #define X2_SERIAL_TX_PIN   -1
   #define X2_SERIAL_RX_PIN   -1
 
-  #define Y_SERIAL_TX_PIN    59
-  #define Y_SERIAL_RX_PIN    64
+  #define Y_SERIAL_TX_PIN    0XE9
+  #define Y_SERIAL_RX_PIN    0
   #define Y2_SERIAL_TX_PIN   -1
   #define Y2_SERIAL_RX_PIN   -1
 
-  #define Z_SERIAL_TX_PIN    42
-  #define Z_SERIAL_RX_PIN    65
+  #define Z_SERIAL_TX_PIN    0XEE
+  #define Z_SERIAL_RX_PIN    0
   #define Z2_SERIAL_TX_PIN   -1
   #define Z2_SERIAL_RX_PIN   -1
 
-  #define E0_SERIAL_TX_PIN   44
-  #define E0_SERIAL_RX_PIN   66
+  #define E0_SERIAL_TX_PIN   0XBE
+  #define E0_SERIAL_RX_PIN   0
   #define E1_SERIAL_TX_PIN   -1
   #define E1_SERIAL_RX_PIN   -1
   #define E2_SERIAL_TX_PIN   -1
@@ -162,10 +163,10 @@
 // Temperature Sensors
 //
 #define TEMP_0_PIN        0xC2//0xB1// 13   // Analog Input
-#define TEMP_1_PIN        0xC1//0xB0   // Analog Input
+//#define TEMP_1_PIN        0xC1//0xB0   // Analog Input
 //#define TEMP_2_PIN        0xC0//0xB0   // Analog Input
 #define TEMP_BED_PIN      0xC3//0xC5   // Analog Input
-#define TEMP_BOARD_PIN        0xC0//0xB0   // Analog Input
+#define TEMP_BOARD_PIN        0xC1//0xB0   // Analog Input
 
 // SPI for Max6675 or Max31855 Thermocouple
 #if DISABLED(SDSUPPORT)
@@ -191,18 +192,18 @@
   #endif
 #endif
 
-#define HEATER_0_PIN     0xD3
+#define HEATER_0_PIN     0xD2
 
 #if EXTRUDERS > 1
 #define HEATER_1_PIN     0xD1
 #endif
-#define FAN_PIN         0xA2
-#define FAN1_PIN        0xA3
-#define FAN2_PIN        0xA1
-#define FAN3_PIN        0xA0
-#define FAN4_PIN        0xDA
+#define FAN_PIN         0xC8
+//#define FAN1_PIN        0xC7
+//#define FAN2_PIN        0xD0
+#define FAN_hotend_PIN        0xC7
+#define FAN_board_PIN        0xD0
 
-#define HEATER_BED_PIN 0xD0
+#define HEATER_BED_PIN 0xD1
 #define FAN_SOFT_PWM
 #if ENABLED(IS_RAMPS_EFB)                      // Hotend, Fan, Bed
 #elif ENABLED(IS_RAMPS_EEF)                    // Hotend, Hotend, Fan
@@ -224,6 +225,7 @@
 #endif
 
 
+
 //////////////////////////
 // LCDs and Controllers //
 //////////////////////////
@@ -233,21 +235,22 @@
   // LCD Display output pins
   //
   	#ifdef REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
-        #define LCD_PINS_RS     0xEE//0xC6// 0xDA//0xE6 //T_PEN
-        #define LCD_PINS_ENABLE  0xEF//0xBA//0xEF //D11
-        #define LCD_PINS_D4       0xBB //0xC8 //D19
+        #define LCD_PINS_RS     0xA4//0xC6// 0xDA//0xE6 //T_PEN
+        #define LCD_PINS_ENABLE  0xA5//0xBA//0xEF //D11
+        #define LCD_PINS_D4       0xA3 //0xC8 //D19
+
     #else
-		#define LCD_PINS_RS     0xEE //T_PEN
-        #define LCD_PINS_ENABLE 0xBA //D11
-        #define LCD_PINS_D4     0xBB //D13
-        #define LCD_PINS_D5     0xEC//0xED //D14
-        #define LCD_PINS_D6     0xBC //D15
-		#define LCD_PINS_D7     0xEC//D12
+		#define LCD_PINS_RS     0xA4 //T_PEN
+        #define LCD_PINS_ENABLE 0xA5 //D11
+        #define LCD_PINS_D4     0xA3 //D13
+        #define LCD_PINS_D5     0xA2//0xED //D14
+        #define LCD_PINS_D6     0xA1 //D15
+		#define LCD_PINS_D7     0xA0//D12
 
 	#endif		
        //
 		 ///////////////////
-   #define SD_DETECT_PIN   0xA4 // 0xC7//49
+   #define SD_DETECT_PIN   0xD7 // 0xC7//49
    #define SD_SPI_SCK	0xB3//0xA5//
    #define SD_SPI_MISO	 0xB4// 0xA6
    #define SD_SPI_MOSI	 0xB5//0xA7
@@ -263,11 +266,11 @@
   // LCD Display input pins
   //
   #if ENABLED(NEWPANEL)
-   #define BEEPER_PIN		  0xBD//0xEC
-   #define BTN_ENC 		0xBC//0xEF//0xED
+   #define BEEPER_PIN		  0xA7//0xEC
+   #define BTN_ENC 		0xA6//0xEF//0xED
  
-   #define BTN_EN1 		0xA5//0xE9
-   #define BTN_EN2 		0xA6//0xE8
+   #define BTN_EN1 		0xD3//0xE9
+   #define BTN_EN2 		0xD4//0xE8
 
   #endif // NEWPANEL
 

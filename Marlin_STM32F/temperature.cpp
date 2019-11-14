@@ -919,14 +919,20 @@ void Temperature::manage_heater() {
     if(k>1000*5)
     {
     	k=0;
+#if MOTHERBOARD==BOARD_ERYONE_STM32F103		
     	Get_Temperature(3);
 		temp_fan=gt[3]>40.0?1:0;
 		if(gt[3])
+#else
+		Get_Temperature(1);
+		temp_fan=gt[1]>40.0?1:0;
+		if(gt[1])
+#endif
 		{
 			if(board_fan_old!=temp_fan)// main board
 			{
 				board_fan_old=temp_fan;
-				OUT_WRITE(FAN4_PIN,temp_fan);
+				OUT_WRITE(FAN_board_PIN,temp_fan);
 			}
 		}
 		//if(gt[0]<=0)
@@ -937,7 +943,7 @@ void Temperature::manage_heater() {
 			if(nozzel_fan_old!=temp_fan) // nozzel
 			{
 				nozzel_fan_old=temp_fan;
-				OUT_WRITE(FAN3_PIN,temp_fan);
+				OUT_WRITE(FAN_hotend_PIN,temp_fan);
 			}
 		}
 
@@ -1195,7 +1201,11 @@ void Temperature::updateTemperaturesFromRawValues() {
  * The manager is implemented by periodic calls to manage_heater()
  */
 void Temperature::init() {
-   tmper_init_stm32();//robert
+#if MOTHERBOARD==BOARD_ERYONE_STM32F103
+   tmper_init_stm32(0);//robert
+#else
+   tmper_init_stm32(1);//robert
+#endif
   #if MB(RUMBA) && ( \
        ENABLED(HEATER_0_USES_AD595)  || ENABLED(HEATER_1_USES_AD595)  || ENABLED(HEATER_2_USES_AD595)  || ENABLED(HEATER_3_USES_AD595)  || ENABLED(HEATER_4_USES_AD595)  || ENABLED(HEATER_BED_USES_AD595)  || ENABLED(HEATER_CHAMBER_USES_AD595) \
     || ENABLED(HEATER_0_USES_AD8495) || ENABLED(HEATER_1_USES_AD8495) || ENABLED(HEATER_2_USES_AD8495) || ENABLED(HEATER_3_USES_AD8495) || ENABLED(HEATER_4_USES_AD8495) || ENABLED(HEATER_BED_USES_AD8495) || ENABLED(HEATER_CHAMBER_USES_AD8495))
@@ -1967,24 +1977,114 @@ HAL_TEMP_TIMER_ISR {
 }
 
 #endif
+
+/*
+#define PID_FUNCTIONAL_RANGE 10 
+#define true 1
+#define false 0
+float Temperature::get_pid_output_r2(int e) {
+	static float temp_iState[2],
+				 temp_dState[2],
+				 pTerm[2],
+				 iTerm[2],
+				 dTerm[2];
+	
+	
+	static float pid_error[2];
+	static char pid_reset[2];
+
+  float pid_output;
+
+      pid_error[HOTEND_INDEX] = target_temperature[HOTEND_INDEX] - current_temperature[HOTEND_INDEX];
+      dTerm[HOTEND_INDEX] = PID_K2 * PID_PARAM(Kd, HOTEND_INDEX) * (current_temperature[HOTEND_INDEX] - temp_dState[HOTEND_INDEX]) + PID_K1 * dTerm[HOTEND_INDEX];
+      temp_dState[HOTEND_INDEX] = current_temperature[HOTEND_INDEX];
+
+      if (pid_error[HOTEND_INDEX] > PID_FUNCTIONAL_RANGE) {
+        pid_output = BANG_MAX;
+        pid_reset[HOTEND_INDEX] = true;
+      }
+      else if (pid_error[HOTEND_INDEX] < -(PID_FUNCTIONAL_RANGE) ||target_temperature[HOTEND_INDEX]== 0) {
+        pid_output = 0;
+        pid_reset[HOTEND_INDEX] = true;
+      }
+      else {
+        if (pid_reset[HOTEND_INDEX]) {
+          temp_iState[HOTEND_INDEX] = 0.0;
+          pid_reset[HOTEND_INDEX] = false;
+        }
+        pTerm[HOTEND_INDEX] = PID_PARAM(Kp, HOTEND_INDEX) * pid_error[HOTEND_INDEX];
+        temp_iState[HOTEND_INDEX] += pid_error[HOTEND_INDEX];
+        iTerm[HOTEND_INDEX] = PID_PARAM(Ki, HOTEND_INDEX) * temp_iState[HOTEND_INDEX];
+
+        pid_output = pTerm[HOTEND_INDEX] + iTerm[HOTEND_INDEX] - dTerm[HOTEND_INDEX];
+
+
+        if (pid_output > PID_MAX) {
+          if (pid_error[HOTEND_INDEX] > 0) temp_iState[HOTEND_INDEX] -= pid_error[HOTEND_INDEX]; // conditional un-integration
+          pid_output = PID_MAX;
+        }
+        else if (pid_output < 0) {
+          if (pid_error[HOTEND_INDEX] < 0) temp_iState[HOTEND_INDEX] -= pid_error[HOTEND_INDEX]; // conditional un-integration
+          pid_output = 0;
+        }
+      }
+	  
+  return pid_output;
+}
+*/
+unsigned char pwm_count=0 ;
+
 void Temperature::isr() {
+/*
+	if(pwm_count%2)
+				 GPIO_SetBits(GPIOD,GPIO_Pin_2);//heat
+			 else
+				 GPIO_ResetBits(GPIOD,GPIO_Pin_2);
+	pwm_count++;
+	return;
+*/
   Temperature_Handler();
 
 ////////////////////////////
-  if(current_temperature[0]>50&&fanSpeeds[2]<=100)
+  if(current_temperature[0]>50&&fanSpeeds[2]<=50)
   {
 
 	 fanSpeeds[2]=255;
 
 
   }
-  else if (current_temperature[0]<50&&fanSpeeds[2]>100)
+  else if (current_temperature[0]<50&&fanSpeeds[2]>50)
   {
 
 	   fanSpeeds[2]=0; 
 
   }
 /////////////////////////////////////// 
+/*
+////////
+	 soft_pwm_amount[0] =  (int)get_pid_output_r(0) >> 1 ;
+	 pwm_count++;
+	 if (pwm_count >= 127) {
+		 pwm_count = 0;
+		 if(soft_pwm_amount[0])
+			 GPIO_SetBits(GPIOD,GPIO_Pin_2);//heat
+		 else
+			 GPIO_ResetBits(GPIOD,GPIO_Pin_2);
+		 //  WRITE_HEATER_0(soft_pwm_amount[0] > 0 ? 1 : 0);
+
+	 }
+	 else
+	 {
+		 if (soft_pwm_amount[0] <= pwm_count)
+			 GPIO_ResetBits(GPIOD,GPIO_Pin_2);
+	 }
+	return;
+ //////////////
+*/
+
+
+
+
 
 #if POWER_LOSS_RECOVER_SUPER_CAP
 			char tmp_d[32];

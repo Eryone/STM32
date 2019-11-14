@@ -15,7 +15,7 @@ extern	 __IO  u16 Read_ADC_Raw[32][4] ;
 void Serial_PC(const long baud);
 void USART1_IRQHandler(void);
 
-void tmper_init_stm32(void);
+void tmper_init_stm32(char board_type);
 GPIO_TypeDef * Get_Port(unsigned char Pin);
 uint16_t Get_Pin(unsigned char Pin);
 void  GPIO_Set_INPUT(unsigned char Pin);

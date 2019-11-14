@@ -15059,16 +15059,18 @@ int card_sd_in;
 int
 main(int argc, char* argv[])
  {
-   	int filemant_stat=0;
+      	int filemant_stat=0;
 
    //	filemant_stat=atoi("12.34\n");
    	setup() ;
-	SET_OUTPUT(FAN4_PIN);
-	OUT_WRITE(FAN4_PIN,0);
-	SET_OUTPUT(FAN3_PIN);
+	SET_OUTPUT(FAN_board_PIN);
+	OUT_WRITE(FAN_board_PIN,0);
+	SET_OUTPUT(FAN_hotend_PIN);
+//	OUT_WRITE(FAN3_PIN,1);
 	OUT_WRITE(HEATER_BED_PIN,0);
 	OUT_WRITE(HEATER_0_PIN,0);
-	OUT_WRITE(HEATER_1_PIN,0);
+
+
 //	enqueue_and_echo_command("M1090");
 
 //	SET_OUTPUT(0xFC);

@@ -190,8 +190,12 @@
 #define FAN_PIN         0xC8
 #define FAN1_PIN        0xA8
 #define FAN2_PIN        0xA9
-#define FAN3_PIN        0xC9
-#define FAN4_PIN        0xCC
+//#define FAN3_PIN        0xC9
+//#define FAN4_PIN        0xCC
+
+#define FAN_hotend_PIN       0xC9
+#define FAN_board_PIN        0xCC
+
 
 #define HEATER_BED_PIN 0xD3
 #define FAN_SOFT_PWM
