@@ -18,7 +18,8 @@
 
 ## Feature
 - TMC2209 with sensorless homing
-- Auto bed leveling
+- Auto bed leveling 
+(New version firmware improved the abl. For the nozzle offset: X-10 and Y8. Updated 2020/12/11)
 - Calibrate Z
 
 
