@@ -117,7 +117,7 @@
  * Heated Chamber settings
  */
 #if TEMP_SENSOR_CHAMBER
-  #define CHAMBER_MINTEMP             32
+  #define CHAMBER_MINTEMP             40//32
   #define CHAMBER_MAXTEMP            70
   #define TEMP_CHAMBER_HYSTERESIS     1   // (°C) Temperature proximity considered "close enough" to the target
   //#define CHAMBER_LIMIT_SWITCHING
@@ -430,8 +430,8 @@
 
 #define EXTRUDER_AUTO_FAN_TEMPERATURE 50
 #define EXTRUDER_AUTO_FAN_SPEED 255   // 255 == full speed
-#define CHAMBER_AUTO_FAN_TEMPERATURE 35
-#define CHAMBER_AUTO_FAN_SPEED 255
+#define CHAMBER_AUTO_FAN_TEMPERATURE 40//35
+#define CHAMBER_AUTO_FAN_SPEED 130//255
 
 /**
  * Part-Cooling Fan Multiplexer
