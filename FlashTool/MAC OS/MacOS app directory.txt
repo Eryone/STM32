@@ -1,0 +1,10 @@
+In macOS, if you right click on the .app file, you can click on "Show Package Contents".
+
+Inside it there is a directory "Contents". Inside that directory there is a file called "Info.plist".
+You can edit "Info.plist" to change settings such as App Title, App Identifier, etc.
+
+Inside the folder "Resources" there is an "icon.icns" file, you can change it to change the app icon.
+
+Inside the directory "MacOS" are the actual binary and library files.
+
+More details about it can be found online.

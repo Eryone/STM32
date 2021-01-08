@@ -1,0 +1,13 @@
+INSTRUCTIONS TO RUN THIS macOS APP:
+
+1. Extract the zip file.
+2. Then Double Click the .app file to run it.
+
+
+INSTRUCTIONS WHEN APP IS RUNNING:
+
+Connect the hardware through USB and then follow these steps:
+1. Select the appropriate Serial Port. (Use Refresh ports button to refresh Serial Port list)
+2. Click on Download Button and select the proper BIN file.
+3. If problem occurs in step 2 then kindly copy and paste the full path of the .bin file in the text box and then Click on the Download Button.
+4. Wait for the process.

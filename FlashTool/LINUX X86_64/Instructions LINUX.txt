@@ -1,0 +1,30 @@
+IMPORTANT INFO:
+On Windows and macOS systems the users are allowed to communicate over serial ports. 
+But on Linux systems the users are not allowed to communicate over serial ports by default (this is for security reasons in Linux). So to allow the current user to communicate over Serial Ports, we need to follow these steps just one time. After following these steps the user can then communicate over serial ports. After following these steps one time, the user does not need to do anything else to access the serial ports.
+
+1. Open Terminal and type:
+sudo usermod -a -G dialout $USER
+
+2. Log out and Log in again. 
+
+3. If the problem still remains after step 1 and 2, then restart computer.
+
+
+
+INSTRUCTIONS TO RUN THE APP:
+
+1. Right click the .AppImage file and click on Properties.
+2. Click on Permissions.
+3. The checkbox "Allow executing file as program" should be checked/ticked.
+(This is standard procedure for running Linux AppImage Apps)
+
+4. Then Double Click the App file to run it.
+
+
+INSTRUCTIONS WHEN APP IS RUNNING:
+
+Connect the hardware through USB and then follow these steps:
+1. Select the appropriate Serial Port. (Use Refresh ports button to refresh Serial Port list)
+2. Click on Download Button and select the proper BIN file.
+3. If problem occurs in step 2 then kindly copy and paste the full path of the .bin file in the text box and then Click on the Download Button.
+4. Wait for the process.

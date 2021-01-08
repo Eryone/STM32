@@ -1,0 +1,7 @@
+Build and Install
+1. To flash, connect up your printer to your PC via the USB lead. Make sure the PSU of the printer is on.
+
+2. Start the "FlashTool_STM32.exe", make sure you are on the right com port to double-check just unplug your printer and click refresh, the right one will be displayed at the window. 
+
+3. Select the "factory firmware.bin" and it will ask you to reset your printer, do this by pressing the little button under the knob on the LCD screen
+(The button is short and hard to click because it can prevent accidental click. You can use the Allen key to click it)**
