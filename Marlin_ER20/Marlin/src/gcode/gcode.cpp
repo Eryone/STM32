@@ -544,8 +544,8 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
       case 117:
          
          M117();
-         if(!planner.leveling_active)
-          G29();
+         // if(!planner.leveling_active)
+        //G29();
         break;                                    // M117: Set LCD message text, if possible
       case 118: M118(); break;                                    // M118: Display a message in the host console
       case 119: M119(); break;                                    // M119: Report endstop states
