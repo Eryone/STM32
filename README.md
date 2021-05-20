@@ -1,5 +1,5 @@
 # Eryone ER-20 printer Firmware
-###  (Based on Marlin2.0.5.3)
+###  (Based on Marlin 2.0.8)
 
 ![GitHub Stars](https://img.shields.io/github/stars/Eryone/STM32.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/Eryone/STM32.svg)
@@ -8,7 +8,11 @@
 ### Warning
 - **Before of all, if you are not familiar with the Marlin firmware editing. Please don't modify it and we suggest you use the prepared firmware. The modify incorrectly has the risk of damage your printer.**
 
-## Author: 
+## Code contributor: 
+  - **Stefano Piga**
+  - **Matt W.**
+  - **Peter Chung**
+  - **Adriano De Cillis**
   - **Eryone** 
 
 ## Source               
@@ -16,12 +20,28 @@
 - *[Marlin officail](https://github.com/MarlinFirmware/Marlin)* Marlin offical firmware release main page
 - *[Marlin Gcode](https://marlinfw.org/meta/gcode/)* Marlin offical gcode introduction
 
-## Feature
-- TMC2209 with sensorless homing
-- Auto bed leveling 
-(New version firmware improved the abl. For the nozzle offset: X-10 and Y8. Updated 2020/12/11)
-- Calibrate Z
+## Function
+- 1. S_Curve Acceleration
+- 2. LIN_Advanced K
+- 3. Enabled FR/DE/ES/EN/IT Language
+- 4. Powerloss recovery
+(Default off, if you need to use then go to LCD menu enable it)
 
+- 5. Motherboard cooling fan*Half speed/40C
+- 6. Bed leveling 25points*2times detect
+- 7. SD card print percentage
+- 8. Calibrate Z menu moved to "Configuration">"Advanced setting">"Calibration offsets"
+
+
+## Compared with ER20 Firmware 2.0.5.3
+- 1. Fixed eeprom reset error
+- 2. Fixed Auto-PID frezzing error
+   Extend info:
+   #For Auto-PID, we suggest the user do it more than 6 times
+   #Then find out the average value then set it
+   #If you find the temperature raise too fast, try to decrease the PID-I value
+   #If you find the tempreature raise too slow, try to increase the PID-I value
+- 3. Update the marlin version to 2.0.8
 
 
 ## Build and Install
