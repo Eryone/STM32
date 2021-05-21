@@ -883,7 +883,7 @@
  *
  * See https://github.com/synthetos/TinyG/wiki/Jerk-Controlled-Motion-Explained
  */
-#define S_CURVE_ACCELERATION
+//#define S_CURVE_ACCELERATION
 
 //===========================================================================
 //============================= Z Probe Options =============================
@@ -1226,14 +1226,14 @@
 
 // The size of the print bed
 #define X_BED_SIZE 250
-#define Y_BED_SIZE 226 
+#define Y_BED_SIZE 220
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
-#define X_MIN_POS  0//10
-#define Y_MIN_POS  -8
+#define X_MIN_POS 0
+#define Y_MIN_POS -9
 #define Z_MIN_POS 0
-#define X_MAX_POS (X_BED_SIZE + X_MIN_POS)
-#define Y_MAX_POS (Y_BED_SIZE + Y_MIN_POS)
+#define X_MAX_POS 250
+#define Y_MAX_POS 225
 #define Z_MAX_POS 200
 
 /**
@@ -1382,12 +1382,9 @@
 //#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
-#if  ENABLED(BLTOUCH)||ENABLED(FIX_MOUNTED_PROBE)
 #define AUTO_BED_LEVELING_BILINEAR
- #else
-  #define MESH_BED_LEVELING
+//#define MESH_BED_LEVELING
 
-#endif
 
 /**
  * Normally G28 leaves leveling disabled on completion. Enable one of
@@ -1935,7 +1932,7 @@
  *
  * :['JAPANESE', 'WESTERN', 'CYRILLIC']
  */
-#define DISPLAY_CHARSET_HD44780 JAPANESE
+//#define DISPLAY_CHARSET_HD44780 JAPANESE
 
 /**
  * Info Screen Style (0:Classic, 1:Průša)
