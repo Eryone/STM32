@@ -23,7 +23,9 @@
 ## Function
 - S_Curve Acceleration
 - LIN_Advanced K
-- Enabled FR/DE/ES/EN/IT Language
+- 3. Prepared the en version and multi-language version
+       - ** If you flash the multi-language version and printer blue screen.**
+	   - ** Please flash the en version then it will works**
 - Powerloss recovery
 (Default off, if you need to use then go to LCD menu enable it)
 
