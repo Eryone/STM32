@@ -47,12 +47,11 @@
 ## Compared with ER20 Firmware 2.0.5.3
 - Fixed eeprom reset error
 - Fixed Auto-PID frezzing error
-   Extend info:
-   #For Auto-PID, we suggest the user do it more than 6 times
-   #Then find out the average value then set it
-   #If you find the temperature raise too fast, try to decrease the PID-I value
-   #If you find the tempreature raise too slow, try to increase the PID-I value
-- Update the marlin version to 2.0.8
+#### Extend info:
+- For Auto-PID, we suggest the user do it more than 6 times.Then find out the average value then set it
+- If you find the temperature raise too fast, try to decrease the PID-I value
+- If you find the tempreature raise too slow, try to increase the PID-I value
+- **Update the marlin version to 2.0.8**
 
 
 ## Build and Install
