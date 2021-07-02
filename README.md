@@ -21,27 +21,18 @@
 - *[Marlin Gcode](https://marlinfw.org/meta/gcode/)* Marlin offical gcode introduction
 
 ## Function
-<<<<<<< .mine
 - 1. S_Curve Acceleration
 - 2. LIN_Advanced K
 - 3. Prepared the en version and multi-language version
        - ** If you flash the multi-language version and printer blue screen.**
 	   - ** Please flash the en version then it will works**
 - 4. Powerloss recovery
-||||||| .r84
-- 1. S_Curve Acceleration
-- 2. LIN_Advanced K
-- 3. Enabled FR/DE/ES/EN/IT Language
-- 4. Powerloss recovery
-=======
-- S_Curve Acceleration
-- LIN_Advanced K
-- 3. Prepared the en version and multi-language version
-       - ** If you flash the multi-language version and printer blue screen.**
-	   - ** Please flash the en version then it will works**
-- Powerloss recovery
->>>>>>> .r88
 (Default off, if you need to use then go to LCD menu enable it)
+- 5. Support Filament runout sensor/E3D Hotend/Direct drive extruder
+     How to use it? Go to configuration.h, delete"//" to enable which one you want to use.
+	 //#define ER20_FL         // Enalbe for ER20 Filament runout sensor
+     //#define ER20_E3D        // Enalbe for ER20 E3D extruder
+     //#define ER20_Direct     // Enable for ER20 Direct drive extruder
 
 - Motherboard cooling fan*Half speed/40C
 - Bed leveling 25points*2times detect
