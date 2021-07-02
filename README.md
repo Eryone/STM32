@@ -21,12 +21,26 @@
 - *[Marlin Gcode](https://marlinfw.org/meta/gcode/)* Marlin offical gcode introduction
 
 ## Function
+<<<<<<< .mine
+- 1. S_Curve Acceleration
+- 2. LIN_Advanced K
+- 3. Prepared the en version and multi-language version
+       - ** If you flash the multi-language version and printer blue screen.**
+	   - ** Please flash the en version then it will works**
+- 4. Powerloss recovery
+||||||| .r84
+- 1. S_Curve Acceleration
+- 2. LIN_Advanced K
+- 3. Enabled FR/DE/ES/EN/IT Language
+- 4. Powerloss recovery
+=======
 - S_Curve Acceleration
 - LIN_Advanced K
 - 3. Prepared the en version and multi-language version
        - ** If you flash the multi-language version and printer blue screen.**
 	   - ** Please flash the en version then it will works**
 - Powerloss recovery
+>>>>>>> .r88
 (Default off, if you need to use then go to LCD menu enable it)
 
 - Motherboard cooling fan*Half speed/40C
