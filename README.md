@@ -7,7 +7,7 @@
 
 ### Warning
 - **Before of all, if you are not familiar with the Marlin firmware editing. Please don't modify it and we suggest you use the prepared firmware. The modify incorrectly has the risk of damage your printer.**
-- **If your slicer don't have this gcode. You need to add the G29 to your start gcode. The Cura4.9 or higher support the ER20, it prepared this so you don't need to add it. But you may need to add G29 for the Prusa slicer, simplfiy3d,etc.
+- **If your slicer don't have this gcode. You need to add the G29 to your start gcode. The Cura4.9 or higher support the ER20, it prepared this so you don't need to add it. But you may need to add G29 for the Prusa slicer, simplfiy3d,etc.**
 
 
 ## Code contributor: 
