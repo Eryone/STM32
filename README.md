@@ -44,6 +44,8 @@
 - Bed leveling 25points*2times detect
 - SD card print percentage
 - **Calibrate Z menu moved to "Configuration">"Advanced setting">"Calibration offsets"**
+- For the auto bed leveling, if you want to set thte abl to 9 points instead of 25 points.
+Refer to this post then compline it: https://www.eryone.com/forum/viewtopic.php?f=9&t=468
 
 
 ## Compared with ER20 Firmware 2.0.5.3
