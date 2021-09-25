@@ -137,15 +137,7 @@
 
 // Name displayed in the LCD "Ready" message and Info menu
 #if ANY (ER20_FL, ER20_E3D, ER20_Direct)
-  #ifdef ER20_FL
-    #define CUSTOM_MACHINE_NAME "ER20_FL 3D Printer"
-  #endif
-  #ifdef ER20_E3D
-    #define CUSTOM_MACHINE_NAME "ER20_E3D 3D Printer"
-  #endif
-  #ifdef ER20_Direct
-    #define CUSTOM_MACHINE_NAME "ER20_Direct 3D Printer"
-  #endif
+  #define CUSTOM_MACHINE_NAME "ER20 MOD Printer"
 #else
   #define CUSTOM_MACHINE_NAME "ER20 3D Printer"
 #endif
