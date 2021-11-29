@@ -3580,24 +3580,24 @@
  */
 
 // Custom Menu: Main Menu
-//#define CUSTOM_MENU_MAIN
+#define CUSTOM_MENU_MAIN
 #if ENABLED(CUSTOM_MENU_MAIN)
-  //#define CUSTOM_MENU_MAIN_TITLE "Custom Commands"
-  #define CUSTOM_MENU_MAIN_SCRIPT_DONE "M117 User Script Done"
+  #define CUSTOM_MENU_MAIN_TITLE "Calibrate Printer"
+  #define CUSTOM_MENU_MAIN_SCRIPT_DONE "M117 Calibrate Done!"
   #define CUSTOM_MENU_MAIN_SCRIPT_AUDIBLE_FEEDBACK
-  //#define CUSTOM_MENU_MAIN_SCRIPT_RETURN   // Return to status screen after a script
+  #define CUSTOM_MENU_MAIN_SCRIPT_RETURN   // Return to status screen after a script
   #define CUSTOM_MENU_MAIN_ONLY_IDLE         // Only show custom menu when the machine is idle
 
-  #define MAIN_MENU_ITEM_1_DESC "Home & UBL Info"
-  #define MAIN_MENU_ITEM_1_GCODE "G28\nG29 W"
+  #define MAIN_MENU_ITEM_1_DESC "Calibrate Gantry"
+  #define MAIN_MENU_ITEM_1_GCODE "G28\nG1 Z100 F800\nG1 X130 Y110 F8000\nM117 Move to safe point\nG4 P2000\nM117 Set Z current to 350\nM906 Z350\nG4 P2000\nM117 Calibrate start\nG4 P2000\nG0 Z230\nM117 Bang bang bang\nG4 P2000\nG0 Z200\nG4 P2000\nM117 Set Z current to 600\nG4 P1000\nM906 Z600\nG4 P200\nM117 Home All\nG4 P2000\nG28\nG4 P1000\nM117 Calibrate Done!"
   //#define MAIN_MENU_ITEM_1_CONFIRM          // Show a confirmation dialog before this action
 
-  #define MAIN_MENU_ITEM_2_DESC "Preheat for " PREHEAT_1_LABEL
-  #define MAIN_MENU_ITEM_2_GCODE "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
+  #define MAIN_MENU_ITEM_2_DESC "ABL Sensor Turbo"
+  #define MAIN_MENU_ITEM_2_GCODE "M203 Z25\nM117 Turbo now...\nM201 Z300\nG4 P1000\nM500\nM117 Done!"
   //#define MAIN_MENU_ITEM_2_CONFIRM
 
-  //#define MAIN_MENU_ITEM_3_DESC "Preheat for " PREHEAT_2_LABEL
-  //#define MAIN_MENU_ITEM_3_GCODE "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
+  #define MAIN_MENU_ITEM_3_DESC "ABL Sensor Stock"
+  #define MAIN_MENU_ITEM_3_GCODE "M203 Z5\nM117 Roll Back now...\nM201 Z25\nG4 P1000\nM500\nM117 Done!"
   //#define MAIN_MENU_ITEM_3_CONFIRM
 
   //#define MAIN_MENU_ITEM_4_DESC "Heat Bed/Home/Level"
