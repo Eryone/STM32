@@ -41,7 +41,10 @@
 
 #### About More
 - Motherboard cooling fan*Half speed/40C
-- Bed leveling 25points*2times detect
+- Bed leveling 25points/36points detect
+- Calibrate Gantry
+- Auto bed leveling homing speed cofnig switch
+- PID auto tune menu
 - SD card print percentage
 - **Calibrate Z menu moved to "Configuration">"Advanced setting">"Calibration offsets"**
 - For the auto bed leveling, if you want to set thte abl to 9 points instead of 25 points.
